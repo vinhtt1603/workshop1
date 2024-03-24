@@ -1,0 +1,162 @@
+[
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/1-introduce/1.1-ami/",
+	"title": "AMI",
+	"tags": [],
+	"description": "",
+	"content": "AMI Amazon Machine Image (AMI) is a type of virtualization template in the cloud service of Amazon Web Services (AWS). It is a complete image of a virtual machine, including its operating system, applications, and configuration. In addition to the AMIs provided by AWS, we can also customize AMIs according to the project\u0026rsquo;s intended use.\nAn AWS AMI can be used to quickly and easily deploy OS-like instances and applications across multiple virtual machines. AWS offers a number of available AMIs, including images for popular operating systems such as Amazon Linux, Ubuntu, CentOS, Windows Server and more. Users can also create their own AMI from a running virtual machine and store it for later reuse or sharing with others.\n1 AMI includes: root volumes, AMI usage rights are specified for which accounts are used, EBS volume mapping\n"
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/5-cloudfront/5.1-createcloudfront/",
+	"title": "Create Cloud Front",
+	"tags": [],
+	"description": "",
+	"content": "Initialize CloudFront Go to AWS management console \u0026gt; CloudFront Distribution \u0026gt; create distribution Origin Select created Load balancer \u0026gt; WS-ALB Protocol \u0026gt; HTTP only HTTP port \u0026gt; 80 Name \u0026gt; set according to origin domain Viewer \u0026gt; Redirect HTTP to HTTPS Allowed HTTP methods \u0026gt; GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE Cache key and origin requests Cache policy and origin request policy (recommended) Cache policy \u0026gt; cachingOptimized Origin request policy – optional \u0026gt; allviewer WAF \u0026gt; do not enable security protections Price class \u0026gt; use all edge locations Create distribution Distribution is being deployed Test cloudfront Click on the created distribution Copy distribution domain name and paste it into the browser Press F12 \u0026gt; Network and F5 continuously to see website loading speed "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/2-preparation-steps/2.1-t%E1%BA%A1ovpc/",
+	"title": "Create VPC",
+	"tags": [],
+	"description": "",
+	"content": "Create VPC Access the AWS Management Console interface\nFind VPC Select VPC In the VPC interface\nSelect Yours VPC Select Create VPC Proceed to create VPC\nResource, \u0026gt; VPC only Name, \u0026gt; WS-VPC IPv4, \u0026gt; 10.10.0.0/16 Select Create VPC Complete creating VPC "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/",
+	"title": "Deploy static website with Auto Scaling Group",
+	"tags": [],
+	"description": "",
+	"content": "Deploy static website with Auto Scaling Group Overview In this lab, we will deploy a website using Auto Scaling Group to meet the application\u0026rsquo;s workload needs, flexible scalability, and disaster recovery. Next, we will deploy Load Balancer to distribute traffic, improving the ability to scale the application\nContent Introduction of Auto Scaling Group Preparation Steps Create EC2 Instance Auto Scaling Group Amazon CloudFront Resource cleanup "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/4-autoscalinggroup/4.1-dynamicscalingpolicy/",
+	"title": "Dynamic Scaling Policy",
+	"tags": [],
+	"description": "",
+	"content": "In this practical part, we will work with Dynamic Scaling Policy by configuring Dynamic Scaling Policy then we will access the created website and proceed to increase the number of visits to the website. by using webserver stress tool 8 and see if automatic scaling automatically increases the number of instances as configured.\nInitialize Dynamic Scaling Policy Go to Auto Scaling Group Click on WS-ASG Click on the Automatic Scaling tab Select Create Dynamic Scaling Policy Create dynamic scaling policy Select target tracking scaling policy Name \u0026gt; Target Tracking Policy Metric type \u0026gt; Application Load Balancer request count per target Target group \u0026gt; tg-01 Target value \u0026gt; 30 Create Use webserver stress tool 8\nTo download webserver stress tool 8, click here\nInstall and open webserver stress tool 8\nClick test type to enter the following parameters Run until \u0026gt; 50000 Number of users \u0026gt; 100 Click delay \u0026gt; 1 Go to Load Balancer, copy DNS as shown and paste it into the URLs tab on web server stress tool 8 \u0026gt; start test On the EC2 instance, we see that there are 2 more instances in pending status, which means the auto scaling group is scaling in 2 more instances according to max desired capacity = 4 (configured in the auto scaling group creation section). Go to ASG and go to the Activity history tab, look at the log and see that the system has automatically scaled the instance up from 2 to 4. "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/1-introduce/",
+	"title": "Introduction",
+	"tags": [],
+	"description": "",
+	"content": "Deploy a website to EC2 Instance using Auto Scaling Group Auto Scaling Group is an auto-scaling feature that ensures that Amazon EC2 instances are sufficient to run your applications. You can create an AWS Auto Scaling group within EC2 instances. You can specify a minimum number of EC2 instances in that group, and auto-scaling will maintain and guarantee the minimum number of EC2 instances.\nWe can also specify a maximum number of EC2 instances in each auto-scaling group so that AWS Auto Scaling ensures instances never exceed that maximum limit. You can also specify your desired auto-scaling and capacity policies for AWS Auto Scailing in Amazon EC2. Using scaling policies, AWS Auto Scaling can launch or terminate EC2 instances based on need.\nContent AMI LaunchTemplate Load Balancer Now we will go through the most basic concepts of Auto Scaling Group.\n"
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/4-autoscalinggroup/4.2-scheduledactions/",
+	"title": "Scheduled Actions",
+	"tags": [],
+	"description": "",
+	"content": "In this exercise, we will work with Scheduled Actions. For example, if we have an App that needs to increase the number of instances at a certain time to handle the workload every day, after processing, it will automatically reduce the number of instances to avoid waste, then Scheduled Actions is A feature that helps our system automatically Scale out/in without having to do it manually\nInitialize Scheduled Actions Go to auto scaling group \u0026gt; scheduled actions \u0026gt; create scheduled actions Create scheduled actions Name \u0026gt; auto scale out Desired capacity \u0026gt; 3; Min \u0026gt; 3; Max \u0026gt; 4 Recurrence \u0026gt; every day Time zone \u0026gt; asia/Ho_Chi_Minh Specific start time \u0026gt; according to the time specified in the project to auto scale Similarly, we will create another Schedule action for Scale in Name \u0026gt; auto scale out Desired capacity \u0026gt; 2; Min \u0026gt; 2; Max \u0026gt; 4 Recurrence \u0026gt; every day Time zone \u0026gt; asia/Ho_Chi_Minh Specific start time \u0026gt; according to the time specified in the project to auto scale Review the created schedule actions Wait until the correct time has been configured scale out, we go to EC2 to see the number of instances has increased according to the configuration. Go to ASG \u0026gt; activity history and we see the notification log has increased by 1 instance. Next, we wait until the correct time has been configured scale in, the number of instances has decreased according to the config. Go to ASG \u0026gt; activity history and we see a log stating that 1 instance has been terminated "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/3-createec2/3.1-t%E1%BA%A1olaunchtemplate/",
+	"title": "Create Launch Template",
+	"tags": [],
+	"description": "",
+	"content": "Create Launch Template In this part we will create a Launch Template using the EC2 Instance AMI\nWhen creating Launch Template, we first need an AMI\nProceed to create AMI Access to EC2 Select instance Click on the Instance to create AMI \u0026gt; action \u0026gt; image and templates \u0026gt; create image Name the AMI and Create AMI Create Launch Template Click on Launch Templates in the left bar \u0026gt; create launch templates Name the Launch Template Launch Template name \u0026gt; WS-template Application and OS images Select Owned by me Select the previously created AMI Select instance type \u0026gt; t2.micro Select keypair Network Settings Subnet \u0026gt; ws-subnet-1 Security groups \u0026gt; SG-WS Create Launch Template "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/2-preparation-steps/2.2-t%E1%BA%A1osubnet/",
+	"title": "Create Subnet",
+	"tags": [],
+	"description": "",
+	"content": " In the VPC interface\nSelect Subnets Select Create subnet In the Create subnet interface\nSelect WS-VPC Subnet settings subnet name \u0026gt; ws-subnet-1 Availability zones IPv4 VPC CIDR \u0026gt; 10.10.0.0/16 IPv4 Subnet CIDR \u0026gt; 10.10.0.0/24 4 - Tag name \u0026gt; ws-subnet - Create Subnet\nCreate a second Subnet\nSelect WS-VPC Subnet settings subnet name \u0026gt; ws-subnet-2 Availability zones IPv4 VPC CIDR \u0026gt; 10.10.0.0/16 IPv4 Subnet CIDR \u0026gt; 10.10.4.0/24 Create Subnet "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/1-introduce/1.2-launchtemplate/",
+	"title": "Launch Template",
+	"tags": [],
+	"description": "",
+	"content": "Launch Template Launch Template\nLaunch Template contains configuration information to launch an instance. Launch templates allow you to store launch parameters so you don\u0026rsquo;t have to specify them every time you launch an instance. For example, a launch template might contain the AMI ID, instance type, and network settings that we typically use to launch instances. When launching an instance using the Amazon EC2 Console, AWS SDK, or command line tool, you can specify the launch template to use.\nFor each launch template, we can create one or MORE numbered launch template versions. Each version can have different launch parameters. When we launch an instance from a launch template, we can use any version of the launch template. If no version is specified, the default version will be used. We can set any version of the launch template as the default version — by default, it is the FIRST version of the launch template.\n"
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/2-preparation-steps/",
+	"title": "Preparation Steps",
+	"tags": [],
+	"description": "",
+	"content": "Preparation steps In this step we need to prepare some services to deploy the website using Auto Scaling Group with Load Balancer. Overview we will deploy according to the following model.\nImage\nContent Create VPC Create Subnet Create InternetGateway Create Routable Create Security Groups "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/3-createec2/",
+	"title": "Create EC2 Instance",
+	"tags": [],
+	"description": "",
+	"content": "Create EC2 Instance Access the AWS Management Console interface\nFind EC2 Select Launch Instance In the Instance interface \u0026gt; Launch Instance Configure EC2 Instance\nName \u0026gt; webserver-1 AMI \u0026gt; Amazon Linux 2 HVM Instance Type \u0026gt; t2.Micro Keypair Network Settings VPC \u0026gt; VPC-WS Subnet \u0026gt; ws-subnet-1 Auto Assign Public IP \u0026gt; enable Security Group \u0026gt; SG-WS Launch Instance Review and log in to the newly created EC2 Instance Proceed to deploy static website to EC2 instance\nFirst, we log in to the newly created EC2 and enter the command sudo su - to access root Update packages, enter the command yum update -y Install HTTPD, enter the command Yum install -y httpd Create a folder containing the source website\nmkdir aws_wsttvinh Go to the folder you just created cd aws_wsttvinh Proceed to download the website into the newly created folder, here I will clone the source from github -wget https://github.com/cloudacademy/static-website-example.git Download file.zip wget https://github.com/cloudacademy/static-website-example/archive/refs/heads/master.zip Unzip the zip file, show the folders and go to the folder containing the source code unzip master.zip\rlr -lst\rcd static-website-example-master Move files from the current directory to the /var/www/html/ directory mv * /var/www/html/ Go to check folder cd /var/www/html/\rls -lrt Enable httpd so that every time the Server restarts, Httpd will automatically start up Systemctl enable httpd Launch service httpd Systemctl start httpd Go to EC2 Instance Select the newly created EC2 Copy Public IP and paste into the browser Website has been deployed to EC2 Content:\nCreate Launch Template Create TargetGroup Create Load Balancer "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/3-createec2/3.2-t%E1%BA%A1otargetgroup/",
+	"title": "Create Target Group",
+	"tags": [],
+	"description": "",
+	"content": "Create Target Group Go to Ec2 instance, left bar select Targer group \u0026gt; create target group Basic configuration Select Instance Targer group name \u0026gt; tg-01 Protocol : Port \u0026gt; HTTP : 80 Ip address type \u0026gt; Ipv4 VPC \u0026gt; VPC-WS Protocol version \u0026gt; HTTP1 Next Register targets Click on the instance to assign to the target group Include as pending below Review the created target group Create Target Group "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/2-preparation-steps/2.3-internetgateway/",
+	"title": "Internet Gateway",
+	"tags": [],
+	"description": "",
+	"content": "Create Internet Gateway In the VPC interface\nSelect Internet Gateways Select Create internet gateway Name tag \u0026gt; WS-IGW Select Create internet gateway Implement Attach VPC Select Actions Select Attach to VPC Select VPC-WS Select Attach internet gateway "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/1-introduce/1.3-loadbalancer/",
+	"title": "LoadBalancer",
+	"tags": [],
+	"description": "",
+	"content": "Load Balancer Load Balancer is a load balancing feature that automatically distributes your traffic to 1 or more targets, such as EC2 Instances, Containers or IP addresses in 1 or more Availability Zones\nLoad Balancer automatically scales traffic to accommodate changes in traffic to organizational and business applications.\nLoad balancing to multiple HTTP applications across multiple machines Support HTTP/HTTPs redirects Support routes to multiple target groups "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/4-autoscalinggroup/",
+	"title": "Auto Scaling Group",
+	"tags": [],
+	"description": "",
+	"content": "Initialize Auto Scaling Group In this part, we will create an Auto Scaling Group for the website, ensuring the Web server will have high availability, and the ability to increase the number of instances when needed.\nGo to Amazon EC2 Auto scaling group \u0026gt; create Auto Scaling Group Name the ASG \u0026gt; WS-ASG Launch Template \u0026gt; select the created launch template Version \u0026gt; default Network VPC \u0026gt; VPC-WS AZ and Subnet \u0026gt; select all available AZs Load balancing Attach to an existing load balancer Choose from your load balancer target groups \u0026gt; tg-01 (created in the target group section) Group size\nDesired capacity \u0026gt; 2 Min desired capacity \u0026gt; 2 Max desired capacity \u0026gt; 4 Click next \u0026gt; Create ASG\nContent:\nDynamic Scaling Policy Scheduled Actions "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/3-createec2/3.3-t%E1%BA%A1oloadbalancer/",
+	"title": "Create Load Balancer",
+	"tags": [],
+	"description": "",
+	"content": "Create Load Balancer Go to EC2 and select load balancer in the left bar \u0026gt; create load balancer Select Application load balancer \u0026gt; Create Basic configuration Load balancer name \u0026gt; WS-ALB Scheme \u0026gt; internet facing Ip address type \u0026gt; Ipv4 Network Mapping VPC \u0026gt; VPC-WS Mappings \u0026gt; select all available zones of the region Listener and routing Protocol : HTTP; Port \u0026gt; 80 Default action \u0026gt; tg-01 (created in target group) Security groups \u0026gt; SG-WS Create load balancer "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/2-preparation-steps/2.4-routable/",
+	"title": "Create Routable",
+	"tags": [],
+	"description": "",
+	"content": " In the VPC interface\nSelect Route Tables Select Create route table Name \u0026gt; rtb-public VPC \u0026gt; VPC-WS. Select Create route table Click on Routable Select Subnet association \u0026gt; Edit subnet association Select the 2 subnets created previously Save assignment Click on Routable Click on Route tab \u0026gt; Edit Route Destination \u0026gt; 0.0.0.0/0 Target \u0026gt; internet gateway Select the pre-created IGW above Save Changes "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/5-cloudfront/",
+	"title": "Amazon CloudFront",
+	"tags": [],
+	"description": "",
+	"content": "Amazon CloudFront - CDN What is Cloudfront?\nAmazon CloudFront - Content Delivery Network, also known by the abbreviation CDN, is a network that helps deliver content to end users quickly by directing their requests to servers containing the resources. nearest source.\nBasic concepts of CloudFront:\nDistribution: AWS CloudFront distributes content from origin to edge locations through a distribution. A distribution defines how CloudFront distributes content, including the origin address, edge locations used, and security \u0026amp; caching settings. Edge Location: AWS CloudFront uses a global network of edge locations, which are server locations around the world, to deliver content to users closest to that location Origin: This is where your original content is stored, including files, web applications, APIs and Database. Origin can be a Web server, S3 bucket, or other AWS services. Cache: AWS CloudFront stores resources at edge locations to reduce response time and increase website loading speed. These resources include images, CSS and JavaScript files. Logging and Reporting: AWS CloudFront provides reports on distribution activity, including traffic and access counts. Security: AWS CloudFront supports many security features, including HTTPS connections, digital signatures (Certificate), and user authentication Content Create Cloud Front "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/2-preparation-steps/2.5-securitygroup/",
+	"title": "Create Security Groups",
+	"tags": [],
+	"description": "",
+	"content": "Create Security Group In the VPC interface\nSelect Security Group Select Create security group Security Group Name \u0026gt; SG-WS VPC \u0026gt; VPC-WS Inbound Rules Proceed to add the following ports: SSH \u0026gt; 22; Source \u0026gt; anywhere HTTP \u0026gt; 80; Source \u0026gt; anywhere Outbound Rules \u0026gt; all traffic "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/6-cleanup/",
+	"title": "Resource cleanup",
+	"tags": [],
+	"description": "",
+	"content": "Clean up resources We will proceed to delete resources in the following order\nDelete Load Balancer Delete Load Balancer Access Amazon EC2 console On the left navigation bar, select Load Balancer Select Load Balancer Select Action Select Delete Load Balancer Type Confirm to delete. Delete Target Group Go to EC2, in the left sidebar, select Target Group Select the target group to delete Action \u0026gt; Delete Click Yes, Delete to delete Delete Auto Scaling Group Go to EC2, in the left bar select Auto scaling group Select auto scaling group to delete Action \u0026gt; Delete Type Delete to delete Delete EC2 Instances Go to EC2 Instance Select the Instance to delete Click Instance State \u0026gt; Terminal Instance Cick Terminate to delete Delete the AMIs Go to EC2, in the left bar select AMIs Click on unused AMIs Action \u0026gt; Deregister AMI Click Deregister AMI to delete the AMI Delete Snapshots Go to EC2, in the left bar select Snapshots Click all unused Snapshots Action \u0026gt; Delete Snapshot Type Delete to delete Delete VPC Go to VPC \u0026gt; Your VPCs Click to select VPC-WS Action \u0026gt; Delete VPC Type Delete to delete "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]

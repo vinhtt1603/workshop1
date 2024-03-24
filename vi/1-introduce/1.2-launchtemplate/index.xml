@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Launch Template on Triển khai website tĩnh trên EC2 có sử dụng Auto Scaling Group</title>
+    <link>https://vinhtt1603.github.io/workshop1/vi/1-introduce/1.2-launchtemplate/</link>
+    <description>Recent content in Launch Template on Triển khai website tĩnh trên EC2 có sử dụng Auto Scaling Group</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>vi</language>
+    <atom:link href="https://vinhtt1603.github.io/workshop1/vi/1-introduce/1.2-launchtemplate/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

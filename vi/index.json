@@ -1,0 +1,162 @@
+[
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/1-introduce/1.1-ami/",
+	"title": "AMI",
+	"tags": [],
+	"description": "",
+	"content": "AMI Amazon Machine Image (AMI) là một dạng template ảo hóa trong dịch vụ đám mây của Amazon Web Services (AWS). Nó là một hình ảnh hoàn chỉnh của một máy ảo, bao gồm hệ điều hành, ứng dụng và cấu hình của máy đó. Ngoài những AMI được AWS cung cấp ra, chúng ta cũng có thể tự custom AMI theo mục đích sử dụng của dự án.\nMột AMI AWS có thể được sử dụng để triển khai các phiên bản giống hệ điều hành và ứng dụng trên nhiều máy ảo khác nhau một cách nhanh chóng và dễ dàng. AWS cung cấp một số AMI có sẵn, bao gồm các hình ảnh cho các hệ điều hành phổ biến như Amazon Linux, Ubuntu, CentOS, Windows Server và nhiều hơn nữa. Người dùng cũng có thể tạo AMI của riêng mình từ một máy ảo đang chạy và lưu trữ nó để sử dụng lại sau này hoặc chia sẻ với người khác.\n1 AMI bao gồm: root volumes, quyền sử dụng AMI được quy định cho những tài khoản nào được sử dụng, mapping EBS volume\n"
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/5-cloudfront/5.1-createcloudfront/",
+	"title": "Create Cloud Front",
+	"tags": [],
+	"description": "",
+	"content": "Khởi tạo CloudFront Vào AWS management console \u0026gt; CloudFront Distribution \u0026gt; create distribution Origin Chọn Load balancer đã tạo \u0026gt; WS-ALB Protocol \u0026gt; HTTP only HTTP port \u0026gt; 80 Name \u0026gt; đặt theo origin domain Viewer \u0026gt; Redirect HTTP to HTTPS Allowed HTTP methods \u0026gt; GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE Cache key and origin requests Cache policy and origin request policy (recommended) Cache policy \u0026gt; cachingOptimized Origin request policy – optional \u0026gt; allviewer WAF \u0026gt; do not enable security protections Price class \u0026gt; use all edge locations Create distribution Distribution đang được deploy Test cloudfront Click vào distribution đã tạo Copy distribution domain name và dán vào trình duyệt Bấm F12 \u0026gt; Network và F5 liên tục để xem tốc độ load trang web "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/4-autoscalinggroup/4.1-dynamicscalingpolicy/",
+	"title": "Dynamic Scaling Policy",
+	"tags": [],
+	"description": "",
+	"content": "Ở phần thực hành này, chúng ta sẽ làm việc với Dynamic Scaling Policy bằng cách config Dynamic Scaling Policy sau đó chúng ta sẽ truy cập tới website đã tạo và tiến hành tăng số lượng truy cập vào website bằng cách sử dụng webserver stress tool 8 và xem automatic scaling có tự động tăng số lượng instance như đã config hay không.\nKhởi tạo Dynamic Scaling Policy Vào Auto Scaling Group Click vào WS-ASG Click vào tab Automatic Scaling Chọn Create Dynamic Scaling Policy Create dynamic scaling policy Chọn target tracking scaling policy Đặt tên \u0026gt; Target Tracking Policy Metric type \u0026gt; Application Load Balancer request count per target Target group \u0026gt; tg-01 Target value \u0026gt; 30 Create Sử dụng webserver stress tool 8\nĐể tải webserver stress tool 8, bạn hãy nhấn vào đây\nThực hiện cài đặt và mở webserver stress tool 8\nClick test type nhập các thông số sau Run until \u0026gt; 50000 Number of users \u0026gt; 100 Click delay \u0026gt; 1 Vào Load Balancer copy DNS như hình và dán vào phần tab URLs trên web server stress tool 8 \u0026gt; start test Vào EC2 instance chúng ta thấy có thêm 2 instance đang trong trạng thái pending, điều đó đồng nghĩa với việc auto scaling group đang scale in thêm 2 instance theo max desired capacity = 4 ( đã config trong phần tạo auto scaling group ) Vào ASG sang tab Activity history chúng ta xem log và thấy hệ thống đã auto scale instance lên từ 2 thành 4 "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/1-introduce/",
+	"title": "Giới thiệu",
+	"tags": [],
+	"description": "",
+	"content": "Triển khai 1 website lên EC2 Instance có sử dụng Auto Scaling Group Auto Scaling Group là tính năng tự động nhân rộng để đảm bảo rằng các phiên bản Amazon EC2 đủ để chạy các ứng dụng của bạn. Bạn có thể tạo một nhóm AWS Auto Scaling trong các phiên bản EC2. Bạn có thể chỉ định số lượng phiên bản EC2 tối thiểu trong nhóm đó và tự động mở rộng sẽ duy trì và đảm bảo số lượng phiên bản EC2 tối thiểu.\nChúng ta cũng có thể chỉ định số lượng phiên bản EC2 tối đa trong mỗi nhóm tự động mở rộng để AWS Auto Scaling đảm bảo các phiên bản không bao giờ vượt quá giới hạn tối đa đó. Bạn cũng có thể chỉ định các chính sách dung lượng và tự động mở rộng mong muốn cho phần AWS Auto Scailing trong Amazon EC2. Bằng cách sử dụng chính sách mở rộng, AWS Auto Scaling có thể khởi chạy hoặc chấm dứt các phiên bản EC2 tùy theo nhu cầu.\nNội dung AMI LaunchTemplate Load Balancer Bây giờ chúng ta sẽ cùng nhau đi qua các khái niệm cơ bản nhất của Auto Scaling Group.\n"
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/4-autoscalinggroup/4.2-scheduledactions/",
+	"title": "Scheduled Actions",
+	"tags": [],
+	"description": "",
+	"content": "Ở phần thực hành này, chúng ta sẽ làm việc với Scheduled Actions. Ví dụ như chúng ta có 1 App hằng ngày cần tăng số lượng instance vào 1 thời điểm nhất định để xử lí workload, sau khi xử lí xong sẽ tự giảm số lượng instance xuống để tránh lãng phí thì Scheduled Actions là 1 tính năng giúp hệ thống của chúng ta có thể tự động Scale out/in mà không cần phải làm thủ công\nKhởi tạo Scheduled Actions Vào auto scaling group \u0026gt; scheduled actions \u0026gt; create scheduled actions Create scheduled actions Name \u0026gt; auto scale out Desired capacity \u0026gt; 3; Min \u0026gt; 3; Max \u0026gt; 4 Recurrence \u0026gt; every day Time zone \u0026gt; asia/Ho_Chi_Minh Specific start time \u0026gt; theo thời gian quy định trong dự án để auto scale Tương tự chúng ta sẽ tạo thêm 1 Schedule action cho việc Scale in Name \u0026gt; auto scale out Desired capacity \u0026gt; 2; Min \u0026gt; 2; Max \u0026gt; 4 Recurrence \u0026gt; every day Time zone \u0026gt; asia/Ho_Chi_Minh Specific start time \u0026gt; theo thời gian quy định trong dự án để auto scale Review lại các schedule actions đã tạo Chờ tới đúng thời gian đã config scale out, chúng ta vào EC2 xem số lượng instance đã tăng lên theo config. Vào ASG \u0026gt; activity history chúng ta thấy log thông báo đã tăng thêm 1 instance. Tiếp theo, ta chờ tới đúng thời gian đã config scale in, số lượng instance đã giảm theo config. Vào ASG \u0026gt; activity history chúng ta thấy log thông báo đã terminated 1 instance "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/2-preparation-steps/2.1-t%E1%BA%A1ovpc/",
+	"title": "Tạo VPC",
+	"tags": [],
+	"description": "",
+	"content": "Tạo VPC Truy cập giao diện AWS Management Console\nTìm VPC Chọn VPC Trong giao diện VPC\nChọn Yours VPC Chọn Create VPC Tiến hành tạo VPC\nResource, \u0026gt; VPC only Name, \u0026gt; WS-VPC IPv4, \u0026gt; 10.10.0.0/16 Chọn Create VPC Hoàn thành tạo VPC "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/",
+	"title": "Triển khai website static với Auto Scaling Group",
+	"tags": [],
+	"description": "",
+	"content": "Triển khai website static với Auto Scaling Group Tổng quan Trong bài lab này chúng ta sẽ thực hiện triển khai 1 website bằng cách sử dụng Auto Scaling Group để đáp ứng với nhu cầu workload của ứng dụng, khả năng mở rộng linh hoạt, phục hồi sự cố. Kế bên đó chúng ta sẽ triển khai Load Balancer để phân bổ lưu lượng truy cập, cải thiện khả năng thay đổi quy mô ứng dụng\nNội dung Giới thiệu Auto Scaling Group Các Bước Chuẩn Bị Tạo EC2 Instance Auto Scaling Group Amazon CloudFront Dọn dẹp tài nguyên "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/2-preparation-steps/",
+	"title": "Các Bước Chuẩn Bị",
+	"tags": [],
+	"description": "",
+	"content": "Các Bước Chuẩn Bị Trong bước này chúng ta cần phải chuẩn bị 1 số dịch vụ để tiến hành triển khai website sử dụng Auto Scaling Group cùng với Load Balancer. Tổng quan ta sẽ triển khai theo mô hình sau.\nHình\nNội dung Tạo VPC Tạo Subnet Tạo InternetGateway Tạo Routable Tạo Security Groups "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/1-introduce/1.2-launchtemplate/",
+	"title": "Launch Template",
+	"tags": [],
+	"description": "",
+	"content": "Launch Template Launch Template\nLaunch Template có chứa thông tin cấu hình để khởi chạy một instance. Launch template cho phép lưu trữ các tham số khởi chạy (launch) để ta không phải chỉ định chúng mỗi khi khởi chạy một instance. Ví dụ: một launch template có thể chứa AMI ID, instance type và thiết lập mạng mà ta thường sử dụng để khởi chạy instance. Khi khởi chạy một instance bằng Amazon EC2 Console, AWS SDK hoặc công cụ dòng lệnh, ta có thể chỉ định launch template để sử dụng.\nĐối với mỗi launch template, ta có thể tạo một hoặc NHIỀU launch template version được đánh số. Mỗi version có thể có các tham số khởi chạy khác nhau. Khi ta khởi chạy một instance từ launch template, ta có thể sử dụng bất kỳ version nào của launch template. Nếu không chỉ định version, version mặc định sẽ được sử dụng. Ta có thể thiết lập bất kỳ version nào của launch template làm version mặc định — theo mặc định, đó là version ĐẦU TIÊN của launch template.\n"
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/3-createec2/3.1-t%E1%BA%A1olaunchtemplate/",
+	"title": "Tạo Launch Template",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Launch Template Ở phần này chúng ta sẽ tạo 1 Launch Template bằng AMI của EC2 Instance\nKhi tạo Launch Template, đầu tiên chúng ta cần có 1 AMI\nTiến hành tạo AMI Truy cập vào EC2 Chọn instance Click chọn vào Instance cần tạo AMI \u0026gt; action \u0026gt; image and templates \u0026gt; create image Đặt tên cho AMI và Create AMI Tạo Launch Template Click chọn Launch Templates ở thanh bên trái \u0026gt; create launch templates Đặt tên cho Launch Template Launch Template name \u0026gt; WS-template Application and OS image Chọn Owned by me Chọn AMI đã tạo trước đó Chọn instance type \u0026gt; t2.micro Chọn keypair Network Setings Subnet \u0026gt; ws-subnet-1 Security groups \u0026gt; SG-WS Create Launch Template "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/2-preparation-steps/2.2-t%E1%BA%A1osubnet/",
+	"title": "Tạo Subnet",
+	"tags": [],
+	"description": "",
+	"content": " Trong giao diện VPC\nChọn Subnets Chọn Create subnet Trong giao diện Create subnet\nChọn WS-VPC Subnet settings subnet name \u0026gt; ws-subnet-1 Availability zone IPv4 VPC CIDR \u0026gt; 10.10.0.0/16 IPv4 Subnet CIDR \u0026gt; 10.10.0.0/24 4\nTag name \u0026gt; ws-subnet Create Subnet Tạo Subnet thứ 2\nChọn WS-VPC Subnet settings subnet name \u0026gt; ws-subnet-2 Availability zone IPv4 VPC CIDR \u0026gt; 10.10.0.0/16 IPv4 Subnet CIDR \u0026gt; 10.10.4.0/24 Create Subnet "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/2-preparation-steps/2.3-internetgateway/",
+	"title": "Internet Gateway",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Internet Gateway Trong giao diện VPC\nChọn Internet Gateways Chọn Create internet gateway Name tag \u0026gt; WS-IGW Chọn Create internet gateway Thực hiện Attach VPC Chọn Actions Chọn Attach to VPC Chọn VPC-WS Chọn Attach internet gateway "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/1-introduce/1.3-loadbalancer/",
+	"title": "LoadBalancer",
+	"tags": [],
+	"description": "",
+	"content": "Load Balancer Load Balancer là 1 tính năng cân bằng tải tự động phân phối lưu lượng truy cập của bạn đến 1 hay nhiều mục tiêu, chẳng hạn như EC2 Instance, Container hoặc các địa chỉ IP trong 1 hoặc nhiều Availability Zones\nLoad Balancer tự động điều chỉnh lưu lượng để đáp ứng những thay đổi về lưu lượng truy cập đến các ứng dụng của tổ chức và doanh nghiệp.\nLoad balancing đến nhiều HTTP ứng dụng qua nhiều machine Hỗ trợ redirect HTTP/HTTPs Hỗ trợ route đến nhiều target group "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/3-createec2/",
+	"title": "Tạo EC2 Instance",
+	"tags": [],
+	"description": "",
+	"content": "Tạo EC2 Instance Truy cập giao diện AWS Management Console\nTìm EC2 Chọn Launch Instance Ở giao diện Instance \u0026gt; Launch Instance Cấu hình EC2 Instance Name \u0026gt; webserver-1 AMI \u0026gt; Amazon Linux 2 HVM Instance Type \u0026gt; t2.Micro Keypair Network Settings VPC \u0026gt; VPC-WS Subnet \u0026gt; ws-subnet-1 Auto Asign Public IP \u0026gt; enable Security Group \u0026gt; SG-WS Launch Instance Review lại và login vào EC2 Instance vừa tạo Tiến hành triển khai website tĩnh lên EC2 instance\nĐầu tiên chúng ta login vào EC2 vừa tạo và nhập lệnh sudo su - để vào root Update các package, nhập lệnh yum update -y Cài đặt HTTPD, nhập lệnh Yum install -y httpd Tạo thư mục chứa source website\nmkdir aws_wsttvinh Vào thư mục vừa tạo cd aws_wsttvinh Tiến hành download website vào thư mục vừa tạo, ở đây mình sẽ clone source từ github -wget https://github.com/cloudacademy/static-website-example.git Dowload file.zip wget https://github.com/cloudacademy/static-website-example/archive/refs/heads/master.zip Giải nén file zip, show các thư mục và vào thư mục chứa source code unzip master.zip\rlr -lst\rcd static-website-example-master Di chuyển các file từ thư mục hiện tại vào thư mục /var/www/html/ mv * /var/www/html/ Vào kiểm tra thư mục cd /var/www/html/\rls -lrt Enable httpd để mỗi khi restart Server thì Httpd tự khởi động lên Systemctl enable httpd Khởi chạy service httpd Systemctl start httpd Vào EC2 Instance Chọn EC2 vừa tạo Copy IP Public và dán vào trình duyệt Website đã được triển khai lên EC2 Nội dung:\nTạo Launch Template Tạo TargetGroup Tạo Load Balancer "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/3-createec2/3.2-t%E1%BA%A1otargetgroup/",
+	"title": "Tạo Target Group",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Target Group Vào Ec2 instance, thanh bên trái chọn Targer group \u0026gt; create target group Basic configuration Chọn Instance Targer group name \u0026gt; tg-01 Protocol : Port \u0026gt; HTTP : 80 Ip address type \u0026gt; Ipv4 VPC \u0026gt; VPC-WS Protocol version \u0026gt; HTTP1 Next Register targets Click chọn vào instance cần gán vào target group Include as pending below Review lại target group đã tạo Create Target Group "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/4-autoscalinggroup/",
+	"title": "Auto Scaling Group",
+	"tags": [],
+	"description": "",
+	"content": "Khởi tạo Auto Scaling Group Trong phần này chúng ta sẽ tạo 1 Auto Scaling Group cho website, đảm bảo Web server sẽ có độ sẵn sàng cao, và khả năng tăng số lượng instance khi có nhu cầu.\nVào Amazon EC2 Auto scaling group \u0026gt; create Auto Scaling Group Đặt tên cho ASG \u0026gt; WS-ASG Launch Template \u0026gt; chọn launch template đã tạo Version \u0026gt; default create ec2 Network VPC \u0026gt; VPC-WS AZ and Subnet \u0026gt; chọn tất cả các AZ sẵn có Load balancing Attach to an existing load balancer Choose from your load balancer target groups \u0026gt; tg-01 ( đã tạo ở phần targer group ) Group size\nDesired capacity \u0026gt; 2 Min desired capacity \u0026gt; 2 Max desired capacity \u0026gt; 4 Click next \u0026gt; Create ASG\nNội dung:\nDynamic Scaling Policy Scheduled Actions "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/3-createec2/3.3-t%E1%BA%A1oloadbalancer/",
+	"title": "Tạo Load Balancer",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Load Balancer Vào EC2 chọn load balancer ở thanh bên trái \u0026gt; create load balancer Chọn Application load balancer \u0026gt; Create Basic configuration Load balancer name \u0026gt; WS-ALB Scheme \u0026gt; internet facing Ip address type \u0026gt; Ipv4 Network Mapping VPC \u0026gt; VPC-WS Mappings \u0026gt; chọn tất cả các zone sẵn có của region Listener and routing Protocol : HTTP; Port \u0026gt; 80 Default action \u0026gt; tg-01 ( đã tạo ở phần target group ) Security groups \u0026gt; SG-WS Create load balancer "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/2-preparation-steps/2.4-routable/",
+	"title": "Tạo Routable",
+	"tags": [],
+	"description": "",
+	"content": " Trong giao diện VPC\nChọn Route Tables Chọn Create route table Name \u0026gt; rtb-public VPC \u0026gt; VPC-WS. Chọn Cretae route table Click vào Routable Chọn Subnet association \u0026gt; Edit subnet assocation Chọn 2 subnet đã tạo ở trước đó Save assocation Click vào Routable Click vào tab Route \u0026gt; Edit Route Destination \u0026gt; 0.0.0.0/0 Target \u0026gt; internet gateway Chọn IGW đã tạo sẵn ở trên Save Changes "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/5-cloudfront/",
+	"title": "Amazon CloudFront",
+	"tags": [],
+	"description": "",
+	"content": "Amazon CloudFront - CDN Cloudfront là gì ?\nAmazon CloudFront - Content Delivery Network còn được gọi với tên viết tắt là CDN, là một mạng lưới giúp delivery nội dung tới người dùng cuối một cách nhanh chóng nhờ vào việc điều hướng request của họ tới các máy chủ chứa tài nguyên gần nhất.\nCác khái niệm cơ bản của CloudFront:\nDistribution: AWS CloudFront phân phối nội dung từ origin đến các edge location thông qua một distribution. Một distribution định nghĩa cách CloudFront phân phối nội dung, bao gồm địa chỉ của origin, các edge location được sử dụng, các thiết lập security \u0026amp; caching Edge Location: AWS CloudFront sử dụng một mạng lưới toàn cầu các edge location, là các điểm đặt máy chủ trên khắp thế giới, để phân phối nội dung đến người dùng ở gần nhất vị trí đó Origin: Đây là nơi lưu trữ nội dung gốc (origin content) của bạn, bao gồm các tập tin, ứng dụng web, API và Database. Origin có thể là một Web server, S3 bucket hoặc các dịch vụ AWS khác. Cache: AWS CloudFront lưu trữ các tài nguyên tại edge location để giảm thời gian phản hồi và tăng tốc độ tải trang web. Các tài nguyên này bao gồm hình ảnh, tập tin CSS và JavaScript. Logging and Reporting: AWS CloudFront cung cấp các báo cáo về hoạt động của distribution, bao gồm lưu lượng và số lần truy cập. Security: AWS CloudFront hỗ trợ nhiều tính năng bảo mật, bao gồm kết nối HTTPS, chữ ký số (Certificate) và xác thực người dung Nội dung Create Cloud Front "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/2-preparation-steps/2.5-securitygroup/",
+	"title": "Tạo Security Groups",
+	"tags": [],
+	"description": "",
+	"content": "Tạo Security Group Trong giao diện VPC\nChọn Security Group Chọn Cretae security group Security Group Name \u0026gt; SG-WS VPC \u0026gt; VPC-WS Inbound Rules Tiến hành add các port sau : SSH \u0026gt; 22; Source \u0026gt; anywhere HTTP \u0026gt; 80; Soucre \u0026gt; anywhere Outbound Rules \u0026gt; all trafic "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/6-cleanup/",
+	"title": "Dọn dẹp tài nguyên",
+	"tags": [],
+	"description": "",
+	"content": "Dọn dẹp tài nguyên Chúng ta sẽ tiến hành xóa các tài nguyên theo thứ tự sau\nDelete Load Balancer Delete Load Balancer Truy cập Amazon EC2 console Trên thanh điều hướng bên trái, chọn Load Balancer Chọn Load Balancer Chọn Action Chọn Delete Load Balancer Gõ Confirm để xóa. Xóa Target Group Vào EC2, ở thanh bên trái, chọn Target Group Chọn target group cần xóa Action \u0026gt; Delete Click Yes, Delete để xóa Xóa Auto Scaling Group Vào EC2, ở thanh bên trái chọn Auto scaling group Chọn auto scaling group cần xóa Action \u0026gt; Delete Gõ Delete để xóa Xóa các EC2 Instance Vào EC2 Instance Chọn Instance cần xóa Click Instance State \u0026gt; Terminal Instance Cick Terminate để xóa Delete các AMI Vào EC2, ở thanh bên trái chọn AMIs Click vào các AMI không sử dụng Action \u0026gt; Deregister AMI Click Deregister AMI để xóa AMI Delete các Snapshot Vào EC2, ở thanh bên trái chọn Snapshots Click tất cả các Snapshot không sử dụng Action \u0026gt; Delete Snapshot Gõ Delete để xóa Delete VPC Vào VPC \u0026gt; Your VPCs Click chọn VPC-WS Action \u0026gt; Delete VPC Gõ Delete để xóa "
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "https://vinhtt1603.github.io/workshop1/vi/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
